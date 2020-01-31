@@ -1,7 +1,7 @@
 {
 	"name": "apple-music-bulk-add-top-artist-songs-to-playlist",
 	"version": "0.0.1",
-	"description": "",
+	"description": "Add top songs from a list of artists to a specific playlist.  No apple developer account required.  Uses puppeteer and musi.sh.",
 	"main": "app.js",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1"
@@ -13,6 +13,7 @@
 		"nightmare": "^3.0.1",
 		"puppeteer": "^2.0.0",
 		"puppeteer-extra": "^3.1.9",
-		"puppeteer-extra-plugin-stealth": "^2.4.9"
+		"puppeteer-extra-plugin-stealth": "^2.4.9",
+		"readline-sync": "^1.4.10"
 	}
 }
