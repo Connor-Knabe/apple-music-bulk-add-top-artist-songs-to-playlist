@@ -24,51 +24,40 @@ main();
 async function main(pw) {
 	const browser = await puppeteer.launch({ headless: options.disableBrowserWindow, devtools: false, timeout: 60000, slowMo: 250 });
 	try {
-		debugger;
-
 		// @ts-ignore
 		const page = await browser.newPage();
 		await page.goto('https://musi.sh', { waitUntil: 'networkidle2' });
 
 		await page.click('._045a');
-// 		const newPagePromise = new Promise((x) => page.once('popup', x));
 
-// 		const popup = await newPagePromise;
-// 		await popup.waitForSelector('iframe');
+		// debugger;
 
-// 		const elementHandle = await popup.$('iframe');
-// 		const frame = await elementHandle.contentFrame();
+		page.on('dialog', async (dialog) => {
+			console.log(dialog.message());
+			await dialog.accept();
+			await page.waitFor(2000);
 
-		// await frame.type('#account_name_text_field', login.email);
-		// await frame.type('body', '\u000d');
-		// await frame.waitFor('#password_text_field');
-		// await frame.type('#password_text_field', pw);
-		// await frame.waitFor(3000);
-		// await frame.type('body', '\u000d');
-		// await frame.waitFor(15000);
+			const songTitle = await page.$('#main-content > div > div._657c > div > div:nth-child(1)');
 
-		await page.waitFor('._8a29');
-		await page.waitFor(3000);
-		await page.type('._8a29', 'Four Tet');
-		await page.type('body', '\u000d');
+			//#main-content > div > div._657c > div > div:nth-child(1)
+			//#main-content > div > div._657c > div > div:nth-child(2)
+			//#main-content > div > div._657c > div > div:nth-child(3)
+			//#main-content > div > div._657c > div > div:nth-child(4)
+			//#main-content > div > div._657c > div > div:nth-child(5)
 
-		const songTitle = await page.$('#main-content > div > div._657c > div > div:nth-child(1)');
+			await songTitle.click({
+				button: 'right'
+			});
+			await page.click('#app-root > nav.react-contextmenu.react-contextmenu--visible > div:nth-child(8)');
 
-		//#main-content > div > div._657c > div > div:nth-child(1)
-		//#main-content > div > div._657c > div > div:nth-child(2)
-		//#main-content > div > div._657c > div > div:nth-child(3)
-		//#main-content > div > div._657c > div > div:nth-child(4)
-		//#main-content > div > div._657c > div > div:nth-child(5)
+			await page.waitForSelector('._92f0');
+			await page.click('#main-content > div._1a01 > div > div > div:nth-child(1)');
 
-		await songTitle.click({
-			button: 'right'
+			await page.waitFor(1000);
 		});
-		await page.click('#app-root > nav.react-contextmenu.react-contextmenu--visible > div:nth-child(8)');
 
-		await page.waitForSelector('._92f0');
-		await page.click('#main-content > div._1a01 > div > div > div:nth-child(1)');
-
-		await page.waitFor(1000);
+		await page.waitFor('._69de');
+		await page.goto('https://musi.sh/search/catalog/bassnectar', { waitUntil: 'networkidle2' });
 	} catch (exception) {
 		await browser.close();
 	}
