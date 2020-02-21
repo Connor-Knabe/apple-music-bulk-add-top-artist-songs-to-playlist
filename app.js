@@ -37,28 +37,33 @@ async function main(pw) {
 			await dialog.accept();
 			await page.waitFor(2000);
 
-			const songTitle = await page.$('#main-content > div > div._657c > div > div:nth-child(1)');
-
-			//#main-content > div > div._657c > div > div:nth-child(1)
-			//#main-content > div > div._657c > div > div:nth-child(2)
-			//#main-content > div > div._657c > div > div:nth-child(3)
-			//#main-content > div > div._657c > div > div:nth-child(4)
-			//#main-content > div > div._657c > div > div:nth-child(5)
-
-			await songTitle.click({
-				button: 'right'
-			});
-			await page.click('#app-root > nav.react-contextmenu.react-contextmenu--visible > div:nth-child(8)');
-
-			await page.waitForSelector('._92f0');
-			await page.click('#main-content > div._1a01 > div > div > div:nth-child(1)');
-
-			await page.waitFor(1000);
+			await addSong(page, 1);
+			await addSong(page, 2);
+			await addSong(page, 3);
+			await addSong(page, 4);
+			await addSong(page, 5);
 		});
 
+		array.forEach((element) => {});
+
 		await page.waitFor('._69de');
-		await page.goto('https://musi.sh/search/catalog/bassnectar', { waitUntil: 'networkidle2' });
+		await page.goto('https://musi.sh/search/catalog/zedd', { waitUntil: 'networkidle2' });
 	} catch (exception) {
 		await browser.close();
+	}
+
+	async function addSong(page, songNumber) {
+		const songTitle = await page.$(`#main-content > div > div._657c > div > div:nth-child(${songNumber})`);
+
+		await songTitle.click({
+			button: 'right'
+		});
+		await page.click('#app-root > nav.react-contextmenu.react-contextmenu--visible > div:nth-child(8)');
+
+		await page.waitForSelector('._92f0');
+		await page.click('#main-content > div._1a01 > div > div > div:nth-child(1)');
+		await page.waitFor(1000);
+
+		return await Promise.resolve();
 	}
 }
