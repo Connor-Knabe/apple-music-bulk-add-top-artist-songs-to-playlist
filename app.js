@@ -30,7 +30,7 @@ async function main(pw) {
 		page.on('dialog', async (dialog) => {
 			console.log(dialog.message());
 			await dialog.accept();
-			await page.waitFor(2000);
+			await page.waitFor(3000);
 
 			await addSong(page, 1);
 			await addSong(page, 2);
@@ -38,28 +38,32 @@ async function main(pw) {
 			await addSong(page, 4);
 			await addSong(page, 5);
 
-			console.log(artistNumber);
+			console.log('Artist Number:', artistNumber);
 			await addNextArtist(page, artistNumber++);
 		});
 
 		await page.waitFor('._69de');
 		browser.headless = true;
 
-		await page.goto(`https://musi.sh/search/catalog/${music.list[artistNumber]}`, { waitUntil: 'networkidle2' });
+		await page.goto(`https://musi.sh/search/catalog/${music.list[artistNumber++]}`, { waitUntil: 'networkidle2' });
 	} catch (exception) {
 		await browser.close();
 	}
 
 	async function addSong(page, songNumber) {
 		try {
+			await page.waitFor(500);
+
 			const songTitle = await page.$(`#main-content > div > div._657c > div > div:nth-child(${songNumber})`);
 
 			await songTitle.click({
 				button: 'right'
 			});
+			await page.waitFor(500);
 			await page.click('#app-root > nav.react-contextmenu.react-contextmenu--visible > div:nth-child(8)');
-
+			await page.waitFor(500);
 			await page.waitForSelector('._92f0');
+			await page.waitFor(500);
 			await page.click('#main-content > div._1a01 > div > div > div:nth-child(1)');
 			await page.waitFor(1000);
 			return await Promise.resolve();
