@@ -1,18 +1,13 @@
 const log4js = require('log4js');
 var logger = log4js.getLogger();
 logger.level = 'debug';
-const music = require('./music.js');
+const music = require('./musicKnown.js');
 const options = require('./options.js');
 const puppeteer = require('puppeteer-extra');
 const StealthPlugin = require('puppeteer-extra-plugin-stealth');
-const rl = require('readline-sync');
 puppeteer.use(StealthPlugin());
 
 logger.info('start');
-
-rl.setDefaultOptions({
-	history: false
-});
 
 main();
 
@@ -45,7 +40,11 @@ async function main(pw) {
 		await page.waitFor('._69de');
 		browser.headless = true;
 
-		await page.goto(`https://musi.sh/search/catalog/${music.list[artistNumber++]}`, { waitUntil: 'networkidle2' });
+		if (music.list[artistNumber]) {
+			await page.goto(`https://musi.sh/search/catalog/${music.list[artistNumber++]}`, { waitUntil: 'networkidle2' });
+		} else {
+			await browser.close();
+		}
 	} catch (exception) {
 		await browser.close();
 	}
