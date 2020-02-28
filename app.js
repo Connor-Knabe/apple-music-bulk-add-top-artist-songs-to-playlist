@@ -40,7 +40,7 @@ async function main(pw) {
 		await page.waitFor('._69de');
 		browser.headless = true;
 
-		if (music.list[artistNumber]) {
+		if (music.list[artistNumber] != undefined) {
 			await page.goto(`https://musi.sh/search/catalog/${music.list[artistNumber++]}`, { waitUntil: 'networkidle2' });
 		} else {
 			await browser.close();
