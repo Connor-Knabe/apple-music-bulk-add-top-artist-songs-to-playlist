@@ -9,11 +9,10 @@
 	"author": "Connor Knabe",
 	"license": "MIT",
 	"dependencies": {
-		"log4js": "^3.0.6",
-		"nightmare": "^3.0.1",
-		"puppeteer": "^2.0.0",
-		"puppeteer-extra": "^3.1.9",
-		"puppeteer-extra-plugin-stealth": "^2.4.9",
-		"readline-sync": "^1.4.10"
+		"log4js": "6.3.0",
+		"puppeteer": "4.0.0",
+		"puppeteer-extra": "3.1.9",
+		"puppeteer-extra-plugin-stealth": "2.4.9",
+		"readline-sync": "1.4.10"
 	}
 }
